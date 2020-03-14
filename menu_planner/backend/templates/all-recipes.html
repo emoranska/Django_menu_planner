@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h2>Recipes list</h2>
+    {% for recipe in recipes %}
+        <strong><a href="{% url 'recipe_view' recipe.id %}">{{ recipe.name }}</a></strong><br>
+        Adding date: {{ recipe.add_date }}<br>
+        Author: {{ recipe.author }}<br>
+        <hr>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <h3>Add new recipe</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add">
+        </form>
+    {% endif %}
+{% endblock %}

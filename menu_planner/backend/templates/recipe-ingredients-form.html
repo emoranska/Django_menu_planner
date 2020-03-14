@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h2>Add the ingredient to the recipe: {{ recipe.name }}</h2><br>
+       <form action="" method="post">
+           {% csrf_token %}
+           {{ form.errors }}
+           {{ form.ingredient }}
+           {{ form.quantity }}
+           <input type="hidden" value="{{ recipe.id }}" name="recipe">
+           <input type="submit" value="Add">
+        </form>
+    <hr>
+    <a href="{% url 'recipe_view' recipe.id %}">Show the recipe</a>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h2>{{ recipe.name }}</h2>
+    Author: {{ recipe.author }}<br>
+    Adding date: {{ recipe.add_date }}<br>
+    Ingredients:<ul>
+    {% for element in ingredients %}
+        <li>
+            {{ element.ingredient.name }},
+            {% if element.ingredient.unit == 'amount' %}
+            {{ element.quantity }}
+                {% else %}
+                {{ element.quantity }} {{ element.ingredient.unit }}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    Steps:<br>
+    {{ recipe.description }}<br>
+    <hr>
+    <h3>Create shopping list for the recipe</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.name }}
+            <input type="hidden" name="author" value="{{ user.id }}">
+            <input type="submit" value="Create">
+        </form><br>
+    <hr>
+    <a href="{% url 'user_recipes' user.id %}">Show the list of my recipes</a><br>
+    <a href="{% url 'shopping_lists' user.id %}">Show all my shopping lists</a>
+{% endblock %}

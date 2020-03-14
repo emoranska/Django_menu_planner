@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+    <h2>Shopping list: {{ new_shoppinglist.name }}</h2>
+    <table border="1">
+    <tr>
+        <td>Product</td>
+        <td>Quantity</td>
+        <td>Category</td>
+    </tr>
+
+   {% for item in items %}
+        <tr>
+            <td>{{ item.ingredient.name }}</td>
+            <td>{{ item.quantity }} {{ item.ingredient.unit }}</td>
+            <td>{{ item.ingredient.category }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <hr>
+    <a href="{% url 'shopping_lists' user.id %}">Show all my shopping lists</a>
+{% endblock %}
