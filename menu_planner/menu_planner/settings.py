@@ -133,6 +133,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'ejozefowicz88@gmail.com'
-EMAIL_HOST_PASSWORD = 'marchewka88'
+EMAIL_HOST_USER = '' #enter email address at gmail created and dedicated to this app
+EMAIL_HOST_PASSWORD = '' #enter the password to be able to reset user password
 EMAIL_PORT = 587
