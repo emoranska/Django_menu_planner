@@ -16,14 +16,9 @@ def client():
     client = Client()
     return client
 
-
-@pytest.fixture
-def user():
-    user = User.objects.get()
-    return user
-
-
-@pytest.fixture
-def set_up():
-    for _ in range(5):
-        Product.objects.create(name=faker.name(), category='dairy', unit='kg')
+#
+# @pytest.fixture
+# def set_up():
+#     User.objects.create_user(username='test_user', email='test@test.com', password='top_secret')
+#     Product.objects.create(name='egg', category='diary', unit='amount')
+#     create_fake_recipe()
