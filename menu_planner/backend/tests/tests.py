@@ -3,8 +3,10 @@ import pytest
 from backend.forms import SignUpForm
 
 
+#################### USER TESTS ####################
+
 @pytest.mark.django_db
-def test_register_user_true():
+def test_register_user_ok():
     form_data = {'username': 'testowy',
                  'email': 'test@.gmail.com',
                  'password1': '#asdA44as',
@@ -15,7 +17,7 @@ def test_register_user_true():
 
 
 @pytest.mark.django_db
-def test_register_user_false_passwd_length():
+def test_register_user_wrong_repeated_password():
     form_data = {'username': 'testowy',
                  'email': 'test@.gmail.com',
                  'password1': '#asdA44as',
@@ -26,7 +28,7 @@ def test_register_user_false_passwd_length():
 
 
 @pytest.mark.django_db
-def test_register_user_false_mail():
+def test_register_user_wrong_mail():
     form_data = {'username': 'testowy',
                  'password1': '#asdA44as',
                  'password2': '#asdA44as',
