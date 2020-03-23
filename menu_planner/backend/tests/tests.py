@@ -38,11 +38,11 @@ def test_register_user_wrong_mail():
 
 
 @pytest.mark.django_db
-def test_register_user_existing_login():
-    form_data = {'username': 'emi',
+def test_register_user_existing_login(user):
+    form_data = {'username': 'test_user',
                  'password1': '#asdA44as',
                  'password2': '#asdA44as',
-                 'email': 'test@.gmail.com'}
+                 'email': 'test@gmail.com'}
     form = SignUpForm(data=form_data)
     assert False == form.is_valid()
 
@@ -58,15 +58,19 @@ def test_logout(client):
     client.login(username='john', password='smith')
     response = client.get('/logout/')
     assert response.status_code == 302
+    assert response.url == '/'
 
-#
-# @pytest.mark.django_db
-# def test_change_password_true(client, set_up):
-#     form_data = {'password1': '#3AdcTu', 'password2': '#3AdcTu'}
-#     form = SignUpForm(data=form_data)
-#     assert True == form.is_valid()
-#
-#
+
+@pytest.mark.django_db
+def test_change_password(client):
+    client.login(username='john', password='smith')
+    response = client.post('/password_change/', {'old_password': 'smith', 'new_password1': 'nowak',
+                                                'new_password2': 'nowak'})
+    assert response.status_code == 302
+    assert response.url == '/password_change_done/'
+
+
+
 # def test_change_password_difference():
 #     form_data = {'new_password': '#3AdcTu', 'new_password2': '#3Au'}
 #     form = SignUpForm(data=form_data)
