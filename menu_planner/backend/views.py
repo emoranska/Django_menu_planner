@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -29,12 +30,12 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-
 class AllRecipeView(View):
     def get(self, request):
         form = AddRecipeForm()
         recipes = Recipe.objects.all()
-        return render(request, 'all-recipes.html', {"form": form, "recipes": recipes})
+        user = request.user
+        return render(request, 'all-recipes.html', {"form": form, "recipes": recipes, "user": user})
 
     def post(self, request):
         form = AddRecipeForm(request.POST)
@@ -44,7 +45,7 @@ class AllRecipeView(View):
             return HttpResponseRedirect(url)
 
 
-class RecipeAddIngredientsView(View):
+class RecipeAddIngredientsView(LoginRequiredMixin, View):
     def get(self, request, id):
         form = RecipeAddIngredientsForm()
         products = Product.objects.all()
@@ -65,7 +66,7 @@ class RecipeAddIngredientsView(View):
         return render(request, 'recipe-ingredients-form.html', {"form": form, "recipe": recipe, "products": products})
 
 
-class RecipeView(View):
+class RecipeView(LoginRequiredMixin, View):
     def get(self, request, id):
         form = AddShoppingListForm()
         recipe = Recipe.objects.get(pk=id)
@@ -89,14 +90,14 @@ class RecipeView(View):
                                                                  "items": recipe_ingredients})
 
 
-class UserRecipeView(View):
+class UserRecipeView(LoginRequiredMixin, View):
     def get(self, request, id):
         user = User.objects.get(pk=id)
         recipes = Recipe.objects.filter(author=user)
         return render(request, 'user-recipes.html', {"recipes": recipes})
 
 
-class AllShoppingListsView(View):
+class AllShoppingListsView(LoginRequiredMixin, View):
     def get(self, request, id):
         user = User.objects.get(pk=id)
         shopping_lists = ShoppingList.objects.filter(author=user)
@@ -107,7 +108,7 @@ class AllShoppingListsView(View):
         return render(request, 'user-shoppinglists.html', {"shopping_lists": shopping_lists})
 
 
-class DeleteRecipeView(View):
+class DeleteRecipeView(LoginRequiredMixin, View):
     def get(self, request, id):
         recipe = Recipe.objects.get(pk=id)
         return render(request, 'recipe_confirm_delete.html', {"recipe": recipe})
@@ -119,7 +120,7 @@ class DeleteRecipeView(View):
         return HttpResponseRedirect(reverse('user_recipes', kwargs={'id': user.id}))
 
 
-class DeleteShoppingListView(View):
+class DeleteShoppingListView(LoginRequiredMixin, View):
     def get(self, request, id):
         shopping_list = ShoppingList.objects.get(pk=id)
         return render(request, 'shoppinglist_confirm_delete.html', {"shopping_list": shopping_list})
