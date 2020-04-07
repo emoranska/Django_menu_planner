@@ -7,11 +7,15 @@
         Author: {{ recipe.author }}<br>
         <hr>
     {% endfor %}
-    {% if user.is_authenticated %}
+    {% if not user.is_authenticated %}
+        <h3>To show recipe details and add new recipe - please, log in.</h3>
+    {%  else %}
         <h3>Add new recipe</h3>
         <form action="" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            Recipe name: {{ form.name }}<br>
+            Description: {{ form.description }}<br>
+            <input type="hidden" name="author" value="{{ user.id }}">
             <input type="submit" value="Add">
         </form>
     {% endif %}
