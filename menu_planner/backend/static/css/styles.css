@@ -1,0 +1,16 @@
+body {
+    font-family: "Times New Roman", Arial, serif;
+}
+
+h2, h3 {
+    font-weight: bold;
+}
+
+.recipe_name {
+    font-size: x-large;
+}
+
+img {
+    height: 300px;
+    width: 550px;
+}
