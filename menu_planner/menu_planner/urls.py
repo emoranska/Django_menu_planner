@@ -13,11 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.contrib.auth import views as auth_views
 from backend.views import BaseView, signup, AllRecipeView, UserRecipeView, \
-    RecipeAddIngredientsView, RecipeView, AllShoppingListsView, DeleteRecipeView, DeleteShoppingListView
+    RecipeAddIngredientsView, RecipeView, AllShoppingListsView, DeleteRecipeView, DeleteShoppingListView, UserPanelView, \
+    AddRecipeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,5 +47,7 @@ urlpatterns = [
     path('menuplanner/recipe/<int:id>/', RecipeView.as_view(), name='recipe_view'),
     path('menuplanner/shoppinglists/<int:id>/', AllShoppingListsView.as_view(), name='shopping_lists'),
     path('menuplanner/recipe/<int:id>/delete/', DeleteRecipeView.as_view(), name='delete_recipe'),
-    path('menuplanner/shoppinglist/<int:id>/delete/', DeleteShoppingListView.as_view(), name='delete_shoppinglist')
-]
+    path('menuplanner/shoppinglist/<int:id>/delete/', DeleteShoppingListView.as_view(), name='delete_shoppinglist'),
+    path('menuplanner/user_panel/', UserPanelView.as_view(), name='user_panel'),
+    path('menuplanner/add_recipe/', AddRecipeView.as_view(),name='add_recipe'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

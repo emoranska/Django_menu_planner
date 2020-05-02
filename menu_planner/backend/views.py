@@ -32,10 +32,15 @@ def signup(request):
 
 class AllRecipeView(View):
     def get(self, request):
-        form = AddRecipeForm()
         recipes = Recipe.objects.all()
+        return render(request, 'all-recipes.html', {"recipes": recipes})
+
+
+class AddRecipeView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = AddRecipeForm()
         user = request.user
-        return render(request, 'all-recipes.html', {"form": form, "recipes": recipes, "user": user})
+        return render(request, 'add-recipe.html', {"form": form, "user": user})
 
     def post(self, request):
         form = AddRecipeForm(request.POST)
@@ -130,3 +135,9 @@ class DeleteShoppingListView(LoginRequiredMixin, View):
         shopping_list.delete()
         user = request.user
         return HttpResponseRedirect(reverse('shopping_lists', kwargs={'id': user.id}))
+
+
+class UserPanelView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        return render(request, 'user-panel.html', {"user": user})
