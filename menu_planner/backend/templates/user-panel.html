@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Hi, {{ user }}!</h2>
+    <a href="{% url 'user_recipes' user.id %}">Your recipes</a><br>
+    <a href="{% url 'shopping_lists' user.id %}">Your shopping lists</a><br>
+    <a href="{% url 'add_recipe' %}">Add new recipe</a><br>
+    <a href="{% url 'recipes' %}">Back to the list of all recipes</a><br>
+    <a href="{% url 'password_change' %}">Change password</a><br>
+    <a href='{% url 'logout' %}'>Logout {{ user }}</a><br>
+{% endblock %}
