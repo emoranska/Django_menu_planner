@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block content_1 %}
     <h2>{{ recipe.name }}</h2>
     Author: {{ recipe.author }}<br>
     Adding date: {{ recipe.add_date }}<br>
@@ -26,6 +26,4 @@
             <input type="submit" value="Create">
         </form><br>
     <hr>
-    <a href="{% url 'user_recipes' user.id %}">Show the list of my recipes</a><br>
-    <a href="{% url 'shopping_lists' user.id %}">Show all my shopping lists</a>
 {% endblock %}

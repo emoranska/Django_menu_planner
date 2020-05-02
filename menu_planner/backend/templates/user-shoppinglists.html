@@ -1,23 +1,25 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block content_1 %}
     <h2>Your shopping lists</h2>
     {% for shoppinglist in shopping_lists %}
         <strong>{{ shoppinglist.name }}</strong><br>
         Adding date: {{ shoppinglist.create_date }}<br>
-        <table border="1">
-    <tr>
-        <td>Product</td>
-        <td>Quantity</td>
-        <td>Category</td>
-    </tr>
-        {% for element in shoppinglist.ingredients %}
-        <tr>
-            <td>{{ element.product.name }}</td>
-            <td>{{ element.quantity }} {{ element.product.unit }}</td>
-            <td>{{ element.product.category }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <table class="table table-sm table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Category</th>
+                </tr>
+            </thead>
+            {% for element in shoppinglist.ingredients %}
+            <tr>
+                <td>{{ element.product.name }}</td>
+                <td>{{ element.quantity }} {{ element.product.unit }}</td>
+                <td>{{ element.product.category }}</td>
+            </tr>
+            {% endfor %}
+        </table>
         <a href="{% url 'delete_shoppinglist' shoppinglist.id %}">Delete the shopping list</a>
         <hr>
     {% endfor %}

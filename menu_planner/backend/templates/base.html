@@ -12,19 +12,22 @@
 
 <body>
     <h1>Your cook book</h1>
-    <img src="{% static 'images/kitchen.jpg' %}" alt="kitchen"><br>
+{#    <img src="{% static 'images/kitchen.jpg' %}" alt="kitchen"><br>#}
+    {% block content %}
     {% if user.is_authenticated %}
-        <a href="{% url 'recipes' %}">Go to the list of all recipes</a><br>
+        <a href="{% url 'recipes' %}">The list of all recipes</a><br>
         <hr>
-        <a href='{% url 'logout' %}'>Logout {{ user }}</a><br>
+        <a href='{% url 'user_panel' %}'>User panel</a><br>
     {% else %}
         <a href="{% url 'recipes' %}">Go to the list of all recipes</a><br>
         <hr>
         <a href='{% url 'login' %}'>Login</a><br>
+        <a href='{% url 'password_reset' %}'>Forgot your password?</a><br>
         <a href='{% url 'signup' %}'>Sign up</a><br>
     {% endif %}
         <hr>
-{% block body %}
+{% endblock %}
+{% block content_1 %}
 {% endblock %}
 </body>
 </html>
