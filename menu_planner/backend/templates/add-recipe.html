@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content_1 %}
+    {% if not user.is_authenticated %}
+        <h3>To add new recipe - please, log in.</h3>
+    {%  else %}
+        <h3>Add new recipe</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            Recipe name: {{ form.name }}<br>
+            Description: {{ form.description }}<br>
+            <input type="hidden" name="author" value="{{ user.id }}">
+            <input type="submit" value="Add">
+        </form>
+    {% endif %}
+{% endblock %}
